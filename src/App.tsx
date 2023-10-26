@@ -1,16 +1,27 @@
 import { Container } from './styles';
 import Home from './compositions/home';
-import { Web3Button } from "@thirdweb-dev/react"; 
+import type { AppProps } from "next/app";
+import { ThirdwebProvider, rainbowWallet, metamaskWallet } from "@thirdweb-dev/react";
+import "../styles/globals.css";
 // import DesignSystem from './compositions/design-system';
 
-function App() {
+const activeChain = "ethereum";
+
+function MyApp({ Component, pageProps }: AppProps) {
   
   return (
-    <Container>
-      <Home />
-      {/* <DesignSystem /> */}
-    </Container>
+    <ThirdwebProvider
+      clientId={process.env.NEXT_PUBLIC_TEMPLATE_CLIENT_ID}
+      activeChain={activeChain}
+      supportedWallets={[rainbowWallet(), metamaskWallet()]}
+    >
+      <Component {...pageProps} />
+      <Container>
+        <Home />
+        {/* <DesignSystem /> */}
+      </Container>
+    </ThirdwebProvider>
   );
 }
 
-export default App;
+export default MyApp;

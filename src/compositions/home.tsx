@@ -21,7 +21,7 @@ import LegendsPFP from '../assets/pfp/legends.png';
 import MutantsPFP from '../assets/pfp/mutants.png';
 import SerumPFP from '../assets/pfp/serum.png';
 import ElementalsPFP from '../assets/pfp/elementals.png';
-import { Web3Button } from "@thirdweb-dev/react";
+import { Web3Button, ConnectWallet, useConnect, useDisconnect, useAddress, useConnectionStatus, metamaskWallet } from "@thirdweb-dev/react";
 
 export const Home: FC<{}> = () => {
   
@@ -29,12 +29,40 @@ export const Home: FC<{}> = () => {
     alert('Button clicked!');
   };
 
+  const metamaskConfig = metamaskWallet();
+  const connect = useConnect();
+  const disconnect = useDisconnect();
+  const address = useAddress();
+  const connectionStatus = useConnectionStatus();
+
+  let WalletComponent;
+  if (connectionStatus === "connected") {
+    WalletComponent = (
+      <>
+        <p> You are connected to {address}</p>
+        <button onClick={disconnect}> Disconnect </button>
+      </>
+    );
+  } else if (connectionStatus === "disconnected") {
+    WalletComponent = (
+      <button
+        onClick={async () => {
+          const wallet = await connect(metamaskConfig);
+          console.log("connected to ", wallet);
+        }}
+      >
+        Connect to MetaMask
+      </button>
+    );
+  } else {
+    WalletComponent = <Wallet balance={0.0389} address="0x6972b4e81673bcec5f8b4c280E6F752C800D6ED6" profile={image} />;
+  }
+
   return (
     <>
-
       <Navigation 
         localStyles={{position: 'fixed', top: 0}}
-        wallet={<Wallet balance={0.0389} address="0x6972b4e81673bcec5f8b4c280E6F752C800D6ED6" profile={image} />}>
+        wallet={WalletComponent}>
         <Button variant='TERTIARY' size='M' active>Home</Button>
         <Button variant='TERTIARY' size='M'>Portals</Button>
         <Button as="a" variant='TERTIARY' size='M' after={<External />} href='https://payc.auraexchange.org/' target="_blank">Marketplace</Button>
@@ -110,4 +138,32 @@ export const Home: FC<{}> = () => {
   );
 }
 
+
+
+const metamaskConfig = metamaskWallet();
+const connect = useConnect();
+const disconnect = useDisconnect();
+const address = useAddress();
+const connectionStatus = useConnectionStatus();
+
+if (connectionStatus === "connected") {
+  return (
+    <>
+      <p> You are connected to {address}</p>
+      <button onClick={disconnect}> Disconnect </button>
+    </>
+  );
+}
+if (connectionStatus === "disconnected") {
+  return (
+    <button
+      onClick={async () => {
+        const wallet = await connect(metamaskConfig);
+        console.log("connected to ", wallet);
+      }}
+    >
+      Connect to MetaMask
+    </button>
+  );
+}
 export default Home;

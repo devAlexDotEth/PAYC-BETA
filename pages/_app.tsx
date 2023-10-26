@@ -1,8 +1,9 @@
-import { Container } from 'src/styles';
-import Home from './compositions/home';
+import { Container } from '../src/styles';
+import Home from '../src/compositions/home';
 import type { AppProps } from "next/app";
 import { ThirdwebProvider, rainbowWallet, metamaskWallet } from "@thirdweb-dev/react";
-import "../styles/globals.css";
+import "../src/styles/globals.css";
+import React from 'react';
 // import DesignSystem from './compositions/design-system';
 
 const activeChain = "ethereum";

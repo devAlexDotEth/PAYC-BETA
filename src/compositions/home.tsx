@@ -71,13 +71,11 @@ export const Home: FC<{}> = () => {
       </Navigation>
 
       <Stack direction='VERTICAL' localStyles={{marginTop: 86, marginBottom: 94, '@media (min-width: 1080px)': { marginBottom: 50,}}}>
-
         <Banner pfp={PFP} heading='PAYC Legends'>
           <Button size='M' variant="PRIMARY" onClick={handleClick}>View Collection</Button>
         </Banner>
 
-          {/* Home Tiles */}
-          <Grid
+        <Grid
             columns={1}
             gap={'var(--scale-48)'}
             localStyles={{
@@ -118,10 +116,8 @@ export const Home: FC<{}> = () => {
               <Button size='M' variant='SECONDARY' onClick={handleClick}>View Collection</Button>
               <Button size='M' variant="PRIMARY" disabled>Portal Paused</Button>
             </Card>
-  
-          </Grid>
+        </Grid>
 
-        {/* FOOTER */}
         <Footer
           localStyles={{position: 'fixed', bottom: 0, left: 0}} 
           socials={
@@ -132,38 +128,9 @@ export const Home: FC<{}> = () => {
             </>
           } 
         />
-
       </Stack>
     </>
   );
 }
 
-
-
-const metamaskConfig = metamaskWallet();
-const connect = useConnect();
-const disconnect = useDisconnect();
-const address = useAddress();
-const connectionStatus = useConnectionStatus();
-
-if (connectionStatus === "connected") {
-  return (
-    <>
-      <p> You are connected to {address}</p>
-      <button onClick={disconnect}> Disconnect </button>
-    </>
-  );
-}
-if (connectionStatus === "disconnected") {
-  return (
-    <button
-      onClick={async () => {
-        const wallet = await connect(metamaskConfig);
-        console.log("connected to ", wallet);
-      }}
-    >
-      Connect to MetaMask
-    </button>
-  );
-}
 export default Home;

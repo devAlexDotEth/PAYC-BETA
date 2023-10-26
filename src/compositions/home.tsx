@@ -21,6 +21,7 @@ import LegendsPFP from '../assets/pfp/legends.png';
 import MutantsPFP from '../assets/pfp/mutants.png';
 import SerumPFP from '../assets/pfp/serum.png';
 import ElementalsPFP from '../assets/pfp/elementals.png';
+import { Web3Button } from "@thirdweb-dev/react";
 
 export const Home: FC<{}> = () => {
   

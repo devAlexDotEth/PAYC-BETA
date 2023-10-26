@@ -1,4 +1,4 @@
-import { Container } from './styles';
+import { Container } from 'src/styles';
 import Home from './compositions/home';
 import type { AppProps } from "next/app";
 import { ThirdwebProvider, rainbowWallet, metamaskWallet } from "@thirdweb-dev/react";
